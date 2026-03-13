@@ -1,0 +1,21 @@
+# 构建环境：Node.js 24
+image: node:24
+
+# 定义执行步骤
+pages:
+  stage: deploy
+  # 只在 main 分支推送时触发部署
+  only:
+    - main
+  # 安装依赖 + 构建
+  script:
+    - npm install vitepress --save-dev
+    - npm run docs:build
+  # 声明产物目录（必须为 public）
+  artifacts:
+    paths:
+      - public
+  # 缓存依赖，加速构建
+  cache:
+    paths:
+      - node_modules
